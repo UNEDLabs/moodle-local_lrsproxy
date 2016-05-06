@@ -1,0 +1,6 @@
+LRS Proxy plugin for Moodle 2.X
+------------------------------------------
+
+To install:
+1- install the plugin in moodle/local/lrsproxy/
+2- Read, setup and run moodle/local/lrsproxy/client/client.php
