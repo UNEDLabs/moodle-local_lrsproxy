@@ -13,16 +13,18 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
 /**
  * Internal library of functions for module lrsproxy
  *
  * All the lrsproxy specific functions, needed to implement the module
  * logic, should go here. Never include this file from your lib.php!
  *
- * @package   lrsproxy
- * @copyright 2016, Felix J. Garcia <fgarcia@um.es> 
- *					Luis de la Torre Cubillo <ldelatorre@dia.uned.es>
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package 	local
+ * @subpackage  lrsproxy
+ * @copyright 	2016, Felix J. Garcia <fgarcia@um.es>
+ *					  Luis de la Torre Cubillo <ldelatorre@dia.uned.es>
+ * @license   	http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
  
 defined('MOODLE_INTERNAL') || die();

@@ -17,10 +17,11 @@
 /**
  * Proxy xAPI protocol
  *
- * @package   lrsproxy
- * @copyright 2016, Felix J. Garcia <fgarcia@um.es> 
- *					Luis de la Torre Cubillo <ldelatorre@dia.uned.es>
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package     local
+ * @subpackage  lrsproxy
+ * @copyright   2016, Felix J. Garcia <fgarcia@um.es>
+ *					  Luis de la Torre Cubillo <ldelatorre@dia.uned.es>
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
  
 require_once($CFG->libdir . "/externallib.php");

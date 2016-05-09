@@ -15,16 +15,17 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
  
 /**
- * @package   lrsproxy
- * @copyright 2016, Felix J. Garcia <fgarcia@um.es> 
- *					Luis de la Torre Cubillo <ldelatorre@dia.uned.es>
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package     local
+ * @subpackage  lrsproxy
+ * @copyright   2016, Felix J. Garcia <fgarcia@um.es>
+ *					  Luis de la Torre Cubillo <ldelatorre@dia.uned.es>
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
  
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->component = 'lrsproxy';
-$plugin->version  = 2016042600;
-$plugin->release = '1.0.0';
+$plugin->component = 'local_lrsproxy';
+$plugin->version  = 2016050901;
+$plugin->release = '1.0 (Build 2016050901)';
 $plugin->requires = 2014111000;
 $plugin->maturity = MATURITY_STABLE;

@@ -15,25 +15,29 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @package   lrsproxy
- * @copyright 2016, Felix J. Garcia <fgarcia@um.es> 
- *					Luis de la Torre Cubillo <ldelatorre@dia.uned.es>
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package     local
+ * @subpackage  lrsproxy
+ * @copyright   2016, Felix J. Garcia <fgarcia@um.es>
+ *					  Luis de la Torre Cubillo <ldelatorre@dia.uned.es>
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
  
 defined('MOODLE_INTERNAL') || die;
 
 if ($hassiteconfig) {
+    $settings = new admin_settingpage('local_lrsproxy', new lang_string('pluginname', 'local_lrsproxy'));
+    $ADMIN->add('localplugins', $settings);
+
     // Endpoint
     $settings->add(new admin_setting_configtext('lrsproxy/endpoint',
-        get_string('endpoint', 'lrsproxy'), '',
+        get_string('endpoint', 'local_lrsproxy'), '',
         'http://your.domain.com/endpoint/location/', PARAM_URL));
 
     // Username
     $settings->add(new admin_setting_configtext('lrsproxy/username',
-        get_string('username', 'lrsproxy'), '', 'username', PARAM_TEXT));
+        get_string('username', 'local_lrsproxy'), '', 'username', PARAM_TEXT));
 
 	// Key or password
     $settings->add(new admin_setting_configtext('lrsproxy/password',
-        get_string('password', 'lrsproxy'), '', 'password', PARAM_TEXT));
+        get_string('password', 'local_lrsproxy'), '', 'password', PARAM_TEXT));
 }

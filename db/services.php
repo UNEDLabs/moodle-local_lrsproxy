@@ -17,13 +17,14 @@
 /**
  * Web service local plugin lrsproxy external functions and service definitions.
  *
- * @package   lrsproxy
- * @copyright 2016, Felix J. Garcia <fgarcia@um.es> 
- *					Luis de la Torre Cubillo <ldelatorre@dia.uned.es>
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package     local
+ * @subpackage  lrsproxy
+ * @copyright   2016, Felix J. Garcia <fgarcia@um.es>
+ *					  Luis de la Torre Cubillo <ldelatorre@dia.uned.es>
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-// We defined the web service functions to install
+// We define the web service functions to install
 $functions = array(
         'lrsproxy_store_statement' => array(
                 'classname'   => 'lrsproxy_external',
@@ -33,7 +34,7 @@ $functions = array(
         )
 );
 
-// We define the services to install as pre-build services. A pre-build service is not editable by administrator
+// We define the services to install as pre-built services. A pre-built service is not editable by administrator
 $services = array(
         'LRS Proxy' => array(
                 'functions' => array ('lrsproxy_store_statement'),
