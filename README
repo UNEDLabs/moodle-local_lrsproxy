@@ -1,6 +1,49 @@
-LRS Proxy plugin for Moodle 2.X
+LRS Proxy plugin for Moodle
 ------------------------------------------
 
 To install:
-1- install the plugin in moodle/local/lrsproxy/
-2- Read, setup and run moodle/local/lrsproxy/client/client.php
+1- Download the plugin (ZIP file) from Github
+2- Go to "Site administration / Plugins / Install plugins" on your Moodle website
+3- Drag and drop the ZIP file from step 1
+4- Click "Show more" 
+5- Set the Plugin Type to "Local Plugin"
+6- Click "Install plugin from the ZIP file"
+7- Click "Continue"
+8- Click "Upgrade Moodle database now"
+9- Click "Continue"
+10- Set your LRS configuration (i.e., LRS endpoint, username and password)
+11- Click "Save changes"
+
+If you want to update or change your LRS configuration, go to "Site administration / Plugins / Local plugins / LRS Proxy" on your Moodle website.
+
+If ZIP installation is disabled, you can unzip the ZIP file to moodle/local instead of steps 3 to 7 above.
+
+// 4- Create a token for a specific user and for the service 'My service' (Admin > Plugins > Web services > Manage tokens)
+// 5- Run this script directly from your browser: you should see 'Hello, FIRSTNAME'
+
+To enable:
+1- Go to "Site administration / Advanced features" on your Moodle website
+2- Check the feature "Enable web services"
+3- Click "Save changes"
+4- Go to "Site administration / Plugins / Web services / Manage protocols"
+5- Check "Enable" for "REST protocol"
+6- Click "Save changes"
+7- Go to "Site administration / Plugins / Web services / External services"
+8- Click "Edit" for "LRS Proxy"
+9- Check "Enabled"
+10- Click "Save changes"
+11- Click "Authorised users" for "LRS Proxy"
+12- Add a user to the list of authorised users
+
+To check:
+1- Go to "Site administration / Plugins / Web services / Manage tokens"
+2- Select a user from step 12 above
+3- Select the service "LRS Proxy"
+4- Click "Save changes"
+5- Get token in return
+6- Edit the file moodle/local/lrsproxy/client/client.html
+7- Set your Moodle website to the var "domainname"
+8- Set the token from step 5 to the var "token"
+9- Open the url "http://yourmoodlewebsite/moodle/local/lrsproxy/client/client.html"
+10- Check the JS console output in your browser (responseText should be "Hello World!")
+

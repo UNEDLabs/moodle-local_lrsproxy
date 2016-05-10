@@ -26,19 +26,26 @@
 
 // We define the web service functions to install
 $functions = array(
+        'lrsproxy_echo_text' => array(
+                'classname'   => 'lrsproxy_external',
+                'methodname'  => 'echo_text',
+                'description' => 'Return the same text that was set as parameter.',
+                'type'        => 'read',
+        ),
         'lrsproxy_store_statement' => array(
                 'classname'   => 'lrsproxy_external',
                 'methodname'  => 'store_statement',
                 'description' => 'Return statementId after storing state statement.',
-                'type'        => 'write',
+                'type'        => 'read',
         )
 );
 
 // We define the services to install as pre-built services. A pre-built service is not editable by administrator
 $services = array(
         'LRS Proxy' => array(
-                'functions' => array ('lrsproxy_store_statement'),
-                'restrictedusers' => 1,
-                'enabled' => 0
+                'functions' => array ('lrsproxy_echo_text', 'lrsproxy_store_statement'),
+                'restrictedusers' => 1, // if 1, the administrator must manually select which user can use this service. 
+                                        // (Administration > Plugins > Web services > Manage services > Authorised users)
+                'enabled' => 0	// if 0, then token linked to this service won't work
         )
 );

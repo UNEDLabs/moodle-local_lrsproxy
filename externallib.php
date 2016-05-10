@@ -28,6 +28,38 @@ require_once($CFG->libdir . "/externallib.php");
 
 class lrsproxy_external extends external_api {
 
+    public static function echo_text_parameters () {
+        return new external_function_parameters(
+                array(
+					'text' => new external_value(PARAM_TEXT, 'Text to echo', VALUE_DEFAULT, 'Hello!')
+                )
+        );
+    }
+
+    public static function echo_text ($text) {
+        global $USER;
+		
+        // Parameter validation
+        $params = self::validate_parameters(self::echo_text_parameters(),
+                array('text' => $text));
+
+		// Context validation
+        $context = get_context_instance(CONTEXT_USER, $USER->id);
+        self::validate_context($context);
+
+        // Capability checking (OPTIONAL but in most web service it should present)
+        // if (!has_capability('moodle/user:viewdetails', $context)) {
+        //    throw new moodle_exception('cannotviewprofile');
+        // }
+		
+        return $text;
+    }
+
+    public static function echo_text_returns () {
+        return new external_value(PARAM_TEXT, 'Echo text');
+    }
+
+
     public static function store_statement_parameters () {
         return new external_function_parameters(
                 array(
@@ -47,11 +79,6 @@ class lrsproxy_external extends external_api {
         $context = get_context_instance(CONTEXT_USER, $USER->id);
         self::validate_context($context);
 
-        // Capability checking (OPTIONAL but in most web service it should present)
-        // if (!has_capability('moodle/user:viewdetails', $context)) {
-        //    throw new moodle_exception('cannotviewprofile');
-        // }
-		
 		// TODO
 		// $response = tincan_store_statement();
 		

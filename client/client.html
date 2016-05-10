@@ -7,16 +7,16 @@
 $(document).ready(function() {
     var domainname = 'http://yourmoodle';
     var token = 'acabec9d208978d986986g987657ffg9';
-    var functionname = 'lrsproxy_store_statement';
+    var functionname = 'lrsproxy_echo_text';
     var serverurl = domainname + '/webservice/rest/server.php' ;
 
     //add params into data
-    var content = [ content: 'hello' ];
+    var text = 'Hello World!';
     var data = {
                 wstoken: token,
                 wsfunction: functionname,
                 moodlewsrestformat: 'json',
-                content: content
+                text: text
                 }
     var response = $.ajax(
                             {   type: 'POST',

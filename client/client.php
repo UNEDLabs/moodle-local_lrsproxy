@@ -6,7 +6,7 @@
 //
 
 /**
- * XMLRPC client for Moodle 2 - local_wstemplate
+ * XMLRPC client for Moodle 2
  *
  * This script does not depend of any Moodle code,
  * and it can be called from a browser.
@@ -25,16 +25,16 @@ $token = 'dff3bc6a9368d3b0db1ef59f6760ef7c';
 $domainname = 'http://YOURMOODLE';
 
 /// FUNCTION NAME
-$functionname = 'lrsproxy_store_statement';
+$functionname = 'lrsproxy_echo_text';
 
 /// PARAMETERS
-$content = 'Hello';
+$text = 'Hello';
 
 ///// XML-RPC CALL
 header('Content-Type: text/plain');
 $serverurl = $domainname . '/webservice/xmlrpc/server.php'. '?wstoken=' . $token;
 require_once('./curl.php');
 $curl = new curl;
-$post = xmlrpc_encode_request($functionname, array($content));
+$post = xmlrpc_encode_request($functionname, array($text));
 $resp = xmlrpc_decode($curl->post($serverurl, $post));
 print_r($resp);
