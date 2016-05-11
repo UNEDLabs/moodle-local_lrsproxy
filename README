@@ -54,7 +54,7 @@ If ZIP installation is disabled, you can unzip the ZIP file to moodle/local inst
 12- Add a user to the list of authorised users
 
 5. Testing
-======================
+==========
 
 1- Go to "Site administration / Plugins / Web services / Manage tokens"
 2- Select a user from step 12 above
