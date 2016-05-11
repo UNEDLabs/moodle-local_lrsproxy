@@ -1,7 +1,26 @@
-LRS Proxy plugin for Moodle
-------------------------------------------
+#################
+# LRS Proxy 1.0 #
+#################
 
-To install:
+1. Content
+==========
+
+This plugin installs a new service in Moodle for sending xAPI (formerly TinCan API) statements to a Learning Records Store.
+
+2. License
+==========
+
+LRS Proxy is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as
+published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+
+LRS Proxy is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+
+The GNU General Public License is available on <http://www.gnu.org/licenses/>
+
+3. Installation
+===============
+
 1- Download the plugin (ZIP file) from Github
 2- Go to "Site administration / Plugins / Install plugins" on your Moodle website
 3- Drag and drop the ZIP file from step 1
@@ -16,9 +35,11 @@ To install:
 
 If you want to update or change your LRS configuration, go to "Site administration / Plugins / Local plugins / LRS Proxy" on your Moodle website.
 
-If ZIP installation is disabled, you can unzip the ZIP file to moodle/local instead of steps 3 to 7 above.
+If ZIP installation is disabled, you can unzip the ZIP file to moodle/local instead of steps 3 to 7 above but you need to rename the directory as lrsproxy first.
 
-To enable:
+4. Enabling the plugin
+======================
+
 1- Go to "Site administration / Advanced features" on your Moodle website
 2- Check the feature "Enable web services"
 3- Click "Save changes"
@@ -32,7 +53,9 @@ To enable:
 11- Click "Authorised users" for "LRS Proxy"
 12- Add a user to the list of authorised users
 
-To check:
+5. Testing
+======================
+
 1- Go to "Site administration / Plugins / Web services / Manage tokens"
 2- Select a user from step 12 above
 3- Select the service "LRS Proxy"
@@ -44,3 +67,9 @@ To check:
 9- Open the url "http://yourmoodlewebsite/moodle/local/lrsproxy/client/client.html"
 10- Check the JS console output in your browser (responseText should be "Hello World!")
 
+6. Authors
+==========
+
+LRS Proxy has been developed by:
+ - Felix J. Garcia: fgarcia@um.es
+ - Luis de la Torre: ldelatorre@dia.uned.es
