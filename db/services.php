@@ -30,20 +30,52 @@ $functions = array(
                 'classname'   => 'lrsproxy_external',
                 'methodname'  => 'echo_text',
                 'description' => 'Return the same text that was set as parameter.',
-                'type'        => 'read',
+                'type'        => 'read'
         ),
         'lrsproxy_store_statement' => array(
                 'classname'   => 'lrsproxy_external',
                 'methodname'  => 'store_statement',
                 'description' => 'Return statementId after storing state statement.',
-                'type'        => 'read',
+                'type'        => 'write'
+        ),
+        'lrsproxy_store_statements' => array(
+                'classname'   => 'lrsproxy_external',
+                'methodname'  => 'store_statements',
+                'description' => 'Return list of statementIds after storing state statements.',
+                'type'        => 'write'
+        ),
+        'lrsproxy_fetch_statement' => array(
+                'classname'   => 'lrsproxy_external',
+                'methodname'  => 'fetch_statement',
+                'description' => 'Return statement associated with specified statementId.',
+                'type'        => 'read'
+        ),
+        'lrsproxy_store_activity_state' => array(
+                'classname'   => 'lrsproxy_external',
+                'methodname'  => 'store_activity_state',
+                'description' => 'Return success after storing state data.',
+                'type'        => 'write'
+        ),
+        'lrsproxy_fetch_activity_state' => array(
+                'classname'   => 'lrsproxy_external',
+                'methodname'  => 'fetch_activity_state',
+                'description' => 'Return stored state data.',
+                'type'        => 'read'
+        ),
+        'lrsproxy_delete_activity_state' => array(
+                'classname'   => 'lrsproxy_external',
+                'methodname'  => 'delete_activity_state',
+                'description' => 'Delete state data associated with specified actor and activity.',
+                'type'        => 'write'
         )
 );
 
 // We define the services to install as pre-built services. A pre-built service is not editable by administrator
 $services = array(
         'LRS Proxy' => array(
-                'functions' => array ('lrsproxy_echo_text', 'lrsproxy_store_statement'),
+                'functions' => array ('lrsproxy_echo_text', 'lrsproxy_store_statement', 'lrsproxy_store_statements', 
+					'lrsproxy_fetch_statement',	'lrsproxy_store_activity_state', 'lrsproxy_fetch_activity_state', 
+					'lrsproxy_delete_activity_state'),
                 'restrictedusers' => 1, // if 1, the administrator must manually select which user can use this service. 
                                         // (Administration > Plugins > Web services > Manage services > Authorised users)
                 'enabled' => 0	// if 0, then token linked to this service won't work

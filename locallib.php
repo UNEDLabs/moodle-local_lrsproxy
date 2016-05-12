@@ -30,41 +30,27 @@
 defined('MOODLE_INTERNAL') || die();
 
 // TinCanPHP - required for interacting with the LRS
-require_once("$CFG->dirroot/local/lrsproxy/TinCanPHP/autoload.php");
+require_once($CFG->dirroot. "/local/lrsproxy/TinCanPHP/autoload.php");
 
 /**
- * Send a statement 
+ * Store a statement 
  *
  * @return TinCan LRS Response
  */
-function tincan_store_statement() {
-
-	$url = $this->get_config('endpoint', '');
-    $version = '1.0.1';
-    $username = $this->get_config('username', '');
-    $password = $this->get_config('password', '');	
-
+function tincan_store_statement($element) {
+	// Get RemoteLRS
+	$url = get_config('lrsproxy', 'endpoint');
+    $version = '1.0.0';
+    $username = get_config('lrsproxy', 'username');
+    $password = get_config('lrsproxy', 'password');	
 	$lrs = new \TinCan\RemoteLRS($url, $version, $username, $password);
-	
-	$statement = new \TinCan\Statement(
-		array(
-			'actor' => array(
-				'mbox' => 'mailto:fgarcia@um.es'
-			),
-			'verb' => array(
-				'id' => 'http://unilabs.dia.uned.es/xapi/verbs/action',
-				'display' => array(
-					'en-US' => 'action'
-				)
-			),
-			'object' => array(
-				'id' =>  "http://unilabs.dia.uned.es/xapi/example/CPULoad",
-				'objectType' => "Activity"
-			),
-			"timestamp" => date(DATE_ATOM)
-		)
-	);
+
+	// see: https://rusticisoftware.github.io/TinCanPHP/
+	$statement = \TinCan\Statement::fromJSON($element);
 	
 	$response = $lrs->saveStatement($statement);
-	return $response;
+	
+	if(($response instanceof \TinCan\LRSResponse) && ($response->success) && ($response->content instanceof \TinCan\Statement)) 
+		return $response->content->getId();
+	return -1;
 }

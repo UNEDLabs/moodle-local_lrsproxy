@@ -61,10 +61,10 @@ If ZIP installation is disabled, you can unzip the ZIP file to moodle/local inst
 3- Select the service "LRS Proxy"
 4- Click "Save changes"
 5- Get token in return
-6- Edit the file moodle/local/lrsproxy/client/client.html
+6- Edit the file moodle/local/lrsproxy/client/echo.html
 7- Set your Moodle website to the var "domainname"
 8- Set the token from step 5 to the var "token"
-9- Open the url "http://yourmoodlewebsite/moodle/local/lrsproxy/client/client.html"
+9- Open the url "http://yourmoodlewebsite/moodle/local/lrsproxy/client/echo.html"
 10- Check the JS console output in your browser (responseText should be "Hello World!")
 
 6. Authors
