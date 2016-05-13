@@ -243,26 +243,30 @@ class lrsproxy_external extends external_api {
     public static function retrieve_activity_state_parameters() {
         return new external_function_parameters(
                 array(
-                    'stateId' => new external_value(PARAM_RAW, 'ID for the state, within the given context'),
+                    'activityId' => new external_value(PARAM_RAW, 'Activity ID associated with this state'),
+                    'agent' => new external_value(PARAM_RAW, 'Agent associated with this state'),
+                    'stateId' => new external_value(PARAM_RAW, 'ID for the state, within the given context')
                 )
         );
     }
 	
-    public static function retrieve_activity_state($stateId) {
+    public static function retrieve_activity_state($activityId, $agent, $stateId) {
         global $USER;
 		
         // Parameter validation
-        $params = self::validate_parameters(self::retrieve_activity_state_parameters(),
-                array('stateId' => $stateId));
+        $params = self::validate_parameters(self::retrieve_activity_state_parameters(), array(
+					'activityId' => $activityId, 
+					'agent' => $agent, 
+					'stateId' => $stateId));
 
 		// Context validation
         $context = get_context_instance(CONTEXT_USER, $USER->id);
         self::validate_context($context);
 
-		// TODO
-		// $response = tincan_retrieve_activity_state($stateId);
+		// Retrieve activity state
+		$response = tincan_retrieve_activity_state($activityId, $agent, $stateId);
 
-		return $stateId;
+		return $response;
     }
 
     public static function retrieve_activity_state_returns() {
@@ -274,70 +278,97 @@ class lrsproxy_external extends external_api {
         return new external_function_parameters(
                 array(
                     'activityId' => new external_value(PARAM_RAW, 'Activity ID associated with state(s)'),
-                    'agent' => new external_value(PARAM_RAW, 'Agent associated with state(s)'),
-                    'registration' => new external_value(PARAM_RAW, 'Registration ID associated with state(s)', VALUE_DEFAULT, null),
-                    'since' => new external_value(PARAM_RAW, 'Only states stored since the specified timestamp (exclusive) are returned.', VALUE_DEFAULT, null),
-                    'until' => new external_value(PARAM_RAW, 'Only states stored at or before the specified timestamp are returned.', VALUE_DEFAULT, null),
+                    'agent' => new external_value(PARAM_RAW, 'Agent associated with state(s)')
                 )
         );
     }
 	
-    public static function fetch_activity_states($activityid, $agent, $registration, $since, $until) {
+    public static function fetch_activity_states($activityId, $agent) {
         global $USER;
 		
         // Parameter validation
         $params = self::validate_parameters(self::fetch_activity_states_parameters(), array(
 					'activityId' => $activityId, 
-					'agent' => $agent, 
-					'registration' => $registration, 
-					'since' => $since, 
-					'until' => $until));
+					'agent' => $agent));
 
 		// Context validation
         $context = get_context_instance(CONTEXT_USER, $USER->id);
         self::validate_context($context);
 
-		// TODO
-		// $response = tincan_fetch_activity_states($activityid, $agent, $registration, $since, $until);
+		// Fetch states
+		$response = tincan_fetch_activity_states($activityId, $agent);
 
-		return $activityId;
+		return $response;
     }
 
     public static function fetch_activity_states_returns() {
-        return new external_value(PARAM_RAW, 'Activity state values');
+        return new external_multiple_structure(
+			new external_value(PARAM_RAW, 'Activity state ID of stored state')
+		);
     }
 
 	// proxy for https://github.com/adlnet/xAPI-Spec/blob/master/xAPI.md#74-state-api
     public static function delete_activity_state_parameters() {
         return new external_function_parameters(
                 array(
-                    'activityId' => new external_value(PARAM_RAW, 'Activity ID associated with state(s)'),
-                    'agent' => new external_value(PARAM_RAW, 'Agent associated with state(s)'),
-                    'registration' => new external_value(PARAM_RAW, 'Registration ID associated with state(s)', VALUE_DEFAULT, null),
-                )
+                    'activityId' => new external_value(PARAM_RAW, 'Activity ID associated with this state'),
+                    'agent' => new external_value(PARAM_RAW, 'Agent associated with this state'),
+                    'stateId' => new external_value(PARAM_RAW, 'ID for the state, within the given context')
+				)
         );
     }
-    public static function delete_activity_state($activityid, $agent, $registration) {
+    public static function delete_activity_state($activityId, $agent, $stateId) {
         global $USER;
 		
         // Parameter validation
         $params = self::validate_parameters(self::delete_activity_state_parameters(), array(
 					'activityId' => $activityId, 
 					'agent' => $agent, 
-					'registration' => $registration));
+					'stateId' => $stateId));
 
 		// Context validation
         $context = get_context_instance(CONTEXT_USER, $USER->id);
         self::validate_context($context);
 
-		// TODO
-		// $response = tincan_delete_activity_state($activityid, $agent, $registration);
+		// Delete state
+		$response = tincan_delete_activity_state($activityId, $agent, $stateId);
 
-		return $activityId;
+		return $response;
     }
 
     public static function delete_activity_state_returns() {
-        return new external_value(PARAM_RAW, 'Empty string');
+        return new external_value(PARAM_BOOL, 'Success or Failure');
+    }
+
+	// proxy for https://github.com/adlnet/xAPI-Spec/blob/master/xAPI.md#74-state-api
+    public static function clear_activity_states_parameters() {
+        return new external_function_parameters(
+                array(
+                    'activityId' => new external_value(PARAM_RAW, 'Activity ID associated with this state'),
+                    'agent' => new external_value(PARAM_RAW, 'Agent associated with this state')
+                )
+        );
+    }
+    public static function clear_activity_states($activityId, $agent) {
+        global $USER;
+		
+        // Parameter validation
+        $params = self::validate_parameters(self::clear_activity_states_parameters(), array(
+					'activityId' => $activityId, 
+					'agent' => $agent));
+
+		// Context validation
+        $context = get_context_instance(CONTEXT_USER, $USER->id);
+        self::validate_context($context);
+
+		// Clear states
+		$response = tincan_clear_activity_states($activityId, $agent);
+
+		return $response;
+    }
+
+    public static function clear_activity_states_returns() {
+        return new external_value(PARAM_BOOL, 'Success or Failure');
     }
 
 }

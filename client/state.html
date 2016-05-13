@@ -1,0 +1,141 @@
+<html>
+<head>
+
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.6.4.js"></script>
+
+<script type="text/javascript">
+var domainname = 'http://yourmoodle';
+var token = 'yourtoken';
+	
+function store_state() {
+    var functionname = 'lrsproxy_store_activity_state';
+    var serverurl = domainname + '/webservice/rest/server.php' ;
+
+	var state = {'param1': 'value1', 'param2': 'value2', 'param3': 'value3'};
+    var data = {
+                wstoken: token,
+                wsfunction: functionname,
+                moodlewsrestformat: 'json',
+				content: JSON.stringify(state),
+				activityId: 'http://unilabs.dia.uned.es/xapi/example/CPULoad',
+				agent: JSON.stringify({ mbox: 'fgarcia@um.es' }),
+				registration: '0840dc28-0b76-46ba-9fae-174a514d4e00',
+				stateId: 'af3ac1ef-a611-49f2-ae93-e1338caf47c7'
+                }
+    var response = $.ajax(
+                            {   type: 'POST',
+                                data: data,
+                                url: serverurl,
+								success : function(response) {
+									$('#stId').html(response);
+								}
+                            }
+                         );
+    console.info(response);
+}
+
+function retrieve_state() {
+    var functionname = 'lrsproxy_retrieve_activity_state';
+    var serverurl = domainname + '/webservice/rest/server.php' ;
+
+    var data = {
+                wstoken: token,
+                wsfunction: functionname,
+                moodlewsrestformat: 'json',
+				activityId: 'http://unilabs.dia.uned.es/xapi/example/CPULoad',
+				agent: JSON.stringify({ mbox: 'fgarcia@um.es' }),
+				stateId: $('#stId').html()
+                }
+    var response = $.ajax(
+                            {   type: 'POST',
+                                data: data,
+                                url: serverurl,
+								success : function(response) {
+									$('#st').html(JSON.stringify(JSON.parse(response),null,2));
+								}
+                            }
+                         );
+}
+
+function delete_state() {
+    var functionname = 'lrsproxy_delete_activity_state';
+    var serverurl = domainname + '/webservice/rest/server.php' ;
+
+    var data = {
+                wstoken: token,
+                wsfunction: functionname,
+                moodlewsrestformat: 'json',
+				activityId: 'http://unilabs.dia.uned.es/xapi/example/CPULoad',
+				agent: JSON.stringify({ mbox: 'fgarcia@um.es' }),
+				stateId: $('#stId').html()
+                }
+    var response = $.ajax(
+                            {   type: 'POST',
+                                data: data,
+                                url: serverurl,
+								success : function(response) {
+									if(response) $('#st').html('deleted');
+								}
+                            }
+                         );
+}
+
+function fetch_state() {
+    var functionname = 'lrsproxy_fetch_activity_states';
+    var serverurl = domainname + '/webservice/rest/server.php' ;
+
+    var data = {
+                wstoken: token,
+                wsfunction: functionname,
+                moodlewsrestformat: 'json',
+				activityId: 'http://unilabs.dia.uned.es/xapi/example/CPULoad',
+				agent: JSON.stringify({ mbox: 'fgarcia@um.es' })
+                }
+    var response = $.ajax(
+                            {   type: 'POST',
+                                data: data,
+                                url: serverurl,
+								success : function(response) {
+									$('#stIds').html(JSON.stringify(response));
+								}
+                            }
+                         );
+}
+
+function clear_state() {
+    var functionname = 'lrsproxy_clear_activity_states';
+    var serverurl = domainname + '/webservice/rest/server.php' ;
+
+    var data = {
+                wstoken: token,
+                wsfunction: functionname,
+                moodlewsrestformat: 'json',
+				activityId: 'http://unilabs.dia.uned.es/xapi/example/CPULoad',
+				agent: JSON.stringify({ mbox: 'fgarcia@um.es' })
+                }
+    var response = $.ajax(
+                            {   type: 'POST',
+                                data: data,
+                                url: serverurl,
+								success : function(response) {
+									if(response) $('#stIds').html('deleted');
+								}
+                            }
+                         );
+}
+</script>
+</head>
+<body>
+	<h3>Store/Retrieve/Delete State</h3>
+	<button onclick="store_state()">Store State</button>
+	<button onclick="retrieve_state()">Retrieve State</button>
+	<button onclick="delete_state()">Delete State</button>
+	<pre><code id='stId'>...</code></pre>
+	<pre><code id='st'>...</code></pre>
+
+	<h3>Fetch/Clear States</h3>
+	<button onclick="fetch_state()">Fetch States</button>
+	<button onclick="clear_state()">Clear States</button>
+	<pre><code id='stIds'>...</code></pre>
+</body>
+</html>

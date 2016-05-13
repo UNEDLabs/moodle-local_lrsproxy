@@ -71,12 +71,18 @@ $functions = array(
         'lrsproxy_fetch_activity_states' => array(
                 'classname'   => 'lrsproxy_external',
                 'methodname'  => 'fetch_activity_states',
-                'description' => 'Return stored state datas with specified query.',
+                'description' => 'Return list of stateIds with specified query.',
                 'type'        => 'read'
         ),
         'lrsproxy_delete_activity_state' => array(
                 'classname'   => 'lrsproxy_external',
                 'methodname'  => 'delete_activity_state',
+                'description' => 'Delete state data associated with specified actor and activity.',
+                'type'        => 'write'
+        ),
+        'lrsproxy_clear_activity_states' => array(
+                'classname'   => 'lrsproxy_external',
+                'methodname'  => 'clear_activity_states',
                 'description' => 'Delete state data associated with specified actor and activity.',
                 'type'        => 'write'
         )
@@ -87,7 +93,8 @@ $services = array(
         'LRS Proxy' => array(
                 'functions' => array ('lrsproxy_echo_text', 'lrsproxy_store_statement', 'lrsproxy_store_statements', 
 					'lrsproxy_retrieve_statement', 'lrsproxy_fetch_statements', 'lrsproxy_store_activity_state', 
-					'lrsproxy_retrieve_activity_state', 'lrsproxy_fetch_activity_states', 'lrsproxy_delete_activity_state'),
+					'lrsproxy_retrieve_activity_state', 'lrsproxy_fetch_activity_states', 'lrsproxy_delete_activity_state',
+					'lrsproxy_clear_activity_states'),
                 'restrictedusers' => 1, // if 1, the administrator must manually select which user can use this service. 
                                         // (Administration > Plugins > Web services > Manage services > Authorised users)
                 'enabled' => 0	// if 0, then token linked to this service won't work

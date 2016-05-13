@@ -58,7 +58,7 @@ function tincan_retrieve_statement($statementid) {
 	$lrs = get_remote_lrs();
 	$response = $lrs->retrieveStatement($statementid);
 
-	// Get all statements
+	// Get statement
 	if(($response instanceof \TinCan\LRSResponse) && ($response->success) && ($response->content instanceof \TinCan\Statement))
 		return json_encode($response->content->asVersion(''));
 	return null;
@@ -117,9 +117,9 @@ function tincan_fetch_statements($registration, $agent, $verb, $activity, $since
 }
 
 /**
- * Store a statement 
+ * Store a state
  *
- * @return Statement ID
+ * @return State ID
  */
 function tincan_store_activity_state($content, $activityId, $agent, $registration, $stateId) {
 	$agent = \TinCan\Agent::fromJSON($agent);
@@ -131,6 +131,80 @@ function tincan_store_activity_state($content, $activityId, $agent, $registratio
 	if(($response instanceof \TinCan\LRSResponse) && ($response->success) && ($response->content instanceof \TinCan\State)) 
 		return $response->content->getId();
 	return -1;	
+}
+
+/**
+ * Retrieve a state
+ *
+ * @return State
+ */
+function tincan_retrieve_activity_state($activityId, $agent, $stateId) {
+	$agent = \TinCan\Agent::fromJSON($agent);
+	$activity = new \TinCan\Activity(['id' => $activityId]);
+	
+	$lrs = get_remote_lrs();
+	$response = $lrs->retrieveState($activity, $agent, $stateId);
+
+	// Get state content
+	if(($response instanceof \TinCan\LRSResponse) && ($response->success) && ($response->content instanceof \TinCan\State)) {
+		return json_encode($response->content->getContent());
+	}
+	return null;
+}
+
+/**
+ * Query states 
+ *
+ * @return States
+ */
+function tincan_fetch_activity_states($activityId, $agent) {
+	$agent = \TinCan\Agent::fromJSON($agent);
+	$activity = new \TinCan\Activity(['id' => $activityId]);
+	
+	$lrs = get_remote_lrs();
+	$response = $lrs->retrieveStateIds($activity, $agent);
+	
+	// Get state ids
+	if(($response instanceof \TinCan\LRSResponse) && ($response->success)) {
+		return $response->content;
+	}
+	return null;
+}
+
+/**
+ * Delete state
+ *
+ * @return States
+ */
+function tincan_delete_activity_state($activityId, $agent, $stateId) {
+	$agent = \TinCan\Agent::fromJSON($agent);
+	$activity = new \TinCan\Activity(['id' => $activityId]);
+	
+	$lrs = get_remote_lrs();
+	$response = $lrs->deleteState($activity, $agent, $stateId);
+	
+	if(($response instanceof \TinCan\LRSResponse)) {
+		return $response->success;
+	}
+	return false;
+}
+
+/**
+ * Clear states
+ *
+ * @return States
+ */
+function tincan_clear_activity_states($activityId, $agent) {
+	$agent = \TinCan\Agent::fromJSON($agent);
+	$activity = new \TinCan\Activity(['id' => $activityId]);
+	
+	$lrs = get_remote_lrs();
+	$response = $lrs->clearState($activity, $agent);
+	
+	if(($response instanceof \TinCan\LRSResponse)) {
+		return $response->success;
+	}
+	return false;
 }
 
 /**
