@@ -64,7 +64,7 @@ class lrsproxy_external extends external_api {
     public static function store_statement_parameters () {
         return new external_function_parameters(
                 array(
-					'statement' => new external_value(PARAM_TEXT, 'Statement to store', VALUE_DEFAULT, '')
+					'statement' => new external_value(PARAM_RAW, 'Statement to store')
                 )
         );
     }
@@ -87,7 +87,7 @@ class lrsproxy_external extends external_api {
     }
 
     public static function store_statement_returns () {
-        return new external_value(PARAM_TEXT, 'Statement ID of stored statement');
+        return new external_value(PARAM_RAW, 'Statement ID of stored statement');
     }
 
 	// proxy for https://github.com/adlnet/xAPI-Spec/blob/master/xAPI.md#722-poststatements
@@ -97,7 +97,7 @@ class lrsproxy_external extends external_api {
 					'statements' => new external_multiple_structure(
 						new external_single_structure(
 							array(
-								'statement' => new external_value(PARAM_TEXT, 'Statement to store', VALUE_DEFAULT, '')
+								'statement' => new external_value(PARAM_RAW, 'Statement to store')
 							)
 						)
 					)
@@ -127,55 +127,89 @@ class lrsproxy_external extends external_api {
 
     public static function store_statements_returns () {
         return new external_multiple_structure(
-			new external_value(PARAM_TEXT, 'Statement ID of stored statement')
+			new external_value(PARAM_RAW, 'Statement ID of stored statement')
 		);
     }
 
 	// proxy for https://github.com/adlnet/xAPI-Spec/blob/master/xAPI.md#723-getstatements
-    public static function fetch_statement_parameters () {
+    public static function retrieve_statement_parameters () {
         return new external_function_parameters(		
                 array(
-                    'registration' => new external_value(PARAM_TEXT, 'Registration ID to fetch', VALUE_DEFAULT, null),
-					'statementId' => new external_value(PARAM_TEXT, 'Statement ID to fetch', VALUE_DEFAULT, null),
-                    'agent' => new external_value(PARAM_TEXT, 'Agent to fetch', VALUE_DEFAULT, null),
-                    'verb' => new external_value(PARAM_TEXT, 'Verb to fetch', VALUE_DEFAULT, null),
-                    'activity' => new external_value(PARAM_TEXT, 'Activity to fetch', VALUE_DEFAULT, null),
-                    'since' => new external_value(PARAM_TEXT, 'Only Statements stored since the specified timestamp (exclusive) are returned.', VALUE_DEFAULT, null),
-                    'until' => new external_value(PARAM_TEXT, 'Only Statements stored at or before the specified timestamp are returned.', VALUE_DEFAULT, null),
+					'statementId' => new external_value(PARAM_RAW, 'Statement ID to retrieve'),
                 )
         );
     }
 	
-    public static function fetch_statement ($registration, $statementid, $agent, $verb, $activity, $since, $until) {
+    public static function retrieve_statement ($statementid) {
         global $USER;
 		
         // Parameter validation
-        $params = self::validate_parameters(self::fetch_statement_parameters(),
+        $params = self::validate_parameters(self::retrieve_statement_parameters(),
                 array('statementId' => $statementid));
 
 		// Context validation
         $context = get_context_instance(CONTEXT_USER, $USER->id);
         self::validate_context($context);
 
-		// TODO
-		// $response = tincan_fetch_statements();
+		// Query statements
+		$response = tincan_retrieve_statement($statementid);
 
-		return $registration;
+		return $response;
     }
 	
-    public static function fetch_statement_returns () {
-        return new external_value(PARAM_TEXT, 'Statements requested if exists');
+    public static function retrieve_statement_returns () {
+        return new external_value(PARAM_RAW, 'Statement requested if exists');
+    }
+
+	// proxy for https://github.com/adlnet/xAPI-Spec/blob/master/xAPI.md#723-getstatements
+    public static function fetch_statements_parameters () {
+        return new external_function_parameters(		
+                array(
+                    'registration' => new external_value(PARAM_RAW, 'Registration ID to fetch', VALUE_DEFAULT, null),
+                    'agent' => new external_value(PARAM_RAW, 'Agent to fetch', VALUE_DEFAULT, null),
+                    'verb' => new external_value(PARAM_RAW, 'Verb to fetch', VALUE_DEFAULT, null),
+                    'activity' => new external_value(PARAM_RAW, 'Activity to fetch', VALUE_DEFAULT, null),
+                    'since' => new external_value(PARAM_RAW, 'Only Statements stored since the specified timestamp (exclusive) are returned.', VALUE_DEFAULT, null),
+                    'until' => new external_value(PARAM_RAW, 'Only Statements stored at or before the specified timestamp are returned.', VALUE_DEFAULT, null),
+                )
+        );
+    }
+	
+    public static function fetch_statements ($registration, $agent, $verb, $activity, $since, $until) {
+        global $USER;
+		
+        // Parameter validation
+        $params = self::validate_parameters(self::fetch_statements_parameters(), array(
+					'registration' => $registration, 
+					'agent' => $agent, 
+					'verb' => $verb, 
+					'activity' => $activity, 
+					'since' => $since, 
+					'until' => $until));
+
+		// Context validation
+        $context = get_context_instance(CONTEXT_USER, $USER->id);
+        self::validate_context($context);
+
+		// Query statements
+		$response = tincan_fetch_statements($registration, $agent, $verb, $activity, $since, $until);
+
+		return $response;
+    }
+	
+    public static function fetch_statements_returns () {
+        return new external_value(PARAM_RAW, 'Statements requested if exists');
     }
 
 	// proxy for https://github.com/adlnet/xAPI-Spec/blob/master/xAPI.md#74-state-api
     public static function store_activity_state_parameters () {
         return new external_function_parameters(
                 array(
-                    'content' => new external_value(PARAM_TEXT, 'State document to store', VALUE_DEFAULT, ''),
-                    'activityId' => new external_value(PARAM_TEXT, 'Activity ID associated with this state'),
+                    'content' => new external_value(PARAM_RAW, 'State document to store'),
+                    'activityId' => new external_value(PARAM_RAW, 'Activity ID associated with this state'),
                     'agent' => new external_value(PARAM_RAW, 'Agent associated with this state'),
-                    'registration' => new external_value(PARAM_TEXT, 'Registration ID associated with this state', VALUE_DEFAULT, null),
-                    'stateId' => new external_value(PARAM_TEXT, 'ID for the state, within the given context'),
+                    'registration' => new external_value(PARAM_RAW, 'Registration ID associated with this state', VALUE_DEFAULT, null),
+                    'stateId' => new external_value(PARAM_RAW, 'ID for the state, within the given context'),
                 )
         );
     }
@@ -184,65 +218,102 @@ class lrsproxy_external extends external_api {
         global $USER;
 		
         // Parameter validation
-        $params = self::validate_parameters(self::store_activity_state_parameters(),
-                array('content' => $content));
+        $params = self::validate_parameters(self::store_activity_state_parameters(), array(
+					'content' => $content, 
+					'activityId' => $activityId, 
+					'agent' => $agent, 
+					'registration' => $registration, 
+					'stateId' => $stateId));
 
 		// Context validation
         $context = get_context_instance(CONTEXT_USER, $USER->id);
         self::validate_context($context);
 
-		// TODO
-		// $response = tincan_store_activity_state();
+		// Store activity state
+		$response = tincan_store_activity_state($content, $activityId, $agent, $registration, $stateId);
 
-		return $content;
+		return $response;
 	}
 	
     public static function store_activity_state_returns() {
-        return new external_value(PARAM_TEXT, 'Success or Failure');
+        return new external_value(PARAM_RAW, 'State ID of stored state data');
     }
 	
 	// proxy for https://github.com/adlnet/xAPI-Spec/blob/master/xAPI.md#74-state-api
-    public static function fetch_activity_state_parameters() {
+    public static function retrieve_activity_state_parameters() {
         return new external_function_parameters(
                 array(
-                    'activityId' => new external_value(PARAM_TEXT, 'Activity ID associated with state(s)'),
-                    'agent' => new external_value(PARAM_RAW, 'Agent associated with state(s)'),
-                    'registration' => new external_value(PARAM_TEXT, 'Registration ID associated with state(s)', VALUE_DEFAULT, null),
-                    'stateId' => new external_value(PARAM_TEXT, 'ID for the state, within the given context', VALUE_DEFAULT, null),
-                    'since' => new external_value(PARAM_TEXT, 'Only states stored since the specified timestamp (exclusive) are returned.', VALUE_DEFAULT, null),
-                    'until' => new external_value(PARAM_TEXT, 'Only states stored at or before the specified timestamp are returned.', VALUE_DEFAULT, null),
+                    'stateId' => new external_value(PARAM_RAW, 'ID for the state, within the given context'),
                 )
         );
     }
 	
-    public static function fetch_activity_state($activityid, $agent, $registration, $stateid, $since, $until) {
+    public static function retrieve_activity_state($stateId) {
         global $USER;
 		
         // Parameter validation
-        $params = self::validate_parameters(self::fetch_activity_state_parameters(),
-                array('activityId' => $activityid));
+        $params = self::validate_parameters(self::retrieve_activity_state_parameters(),
+                array('stateId' => $stateId));
 
 		// Context validation
         $context = get_context_instance(CONTEXT_USER, $USER->id);
         self::validate_context($context);
 
 		// TODO
-		// $response = tincan_fetch_activity_state();
+		// $response = tincan_retrieve_activity_state($stateId);
+
+		return $stateId;
+    }
+
+    public static function retrieve_activity_state_returns() {
+        return new external_value(PARAM_RAW, 'Activity state value');
+    }
+
+	// proxy for https://github.com/adlnet/xAPI-Spec/blob/master/xAPI.md#74-state-api
+    public static function fetch_activity_states_parameters() {
+        return new external_function_parameters(
+                array(
+                    'activityId' => new external_value(PARAM_RAW, 'Activity ID associated with state(s)'),
+                    'agent' => new external_value(PARAM_RAW, 'Agent associated with state(s)'),
+                    'registration' => new external_value(PARAM_RAW, 'Registration ID associated with state(s)', VALUE_DEFAULT, null),
+                    'since' => new external_value(PARAM_RAW, 'Only states stored since the specified timestamp (exclusive) are returned.', VALUE_DEFAULT, null),
+                    'until' => new external_value(PARAM_RAW, 'Only states stored at or before the specified timestamp are returned.', VALUE_DEFAULT, null),
+                )
+        );
+    }
+	
+    public static function fetch_activity_states($activityid, $agent, $registration, $since, $until) {
+        global $USER;
+		
+        // Parameter validation
+        $params = self::validate_parameters(self::fetch_activity_states_parameters(), array(
+					'activityId' => $activityId, 
+					'agent' => $agent, 
+					'registration' => $registration, 
+					'since' => $since, 
+					'until' => $until));
+
+		// Context validation
+        $context = get_context_instance(CONTEXT_USER, $USER->id);
+        self::validate_context($context);
+
+		// TODO
+		// $response = tincan_fetch_activity_states($activityid, $agent, $registration, $since, $until);
 
 		return $activityId;
     }
 
-    public static function fetch_activity_state_returns() {
-        return new external_value(PARAM_TEXT, 'Activity state value');
+    public static function fetch_activity_states_returns() {
+        return new external_value(PARAM_RAW, 'Activity state values');
     }
 
 	// proxy for https://github.com/adlnet/xAPI-Spec/blob/master/xAPI.md#74-state-api
     public static function delete_activity_state_parameters() {
         return new external_function_parameters(
                 array(
-                    'activityId' => new external_value(PARAM_TEXT, 'Activity ID associated with state(s)'),
+                    'activityId' => new external_value(PARAM_RAW, 'Activity ID associated with state(s)'),
                     'agent' => new external_value(PARAM_RAW, 'Agent associated with state(s)'),
-                    'registration' => new external_value(PARAM_TEXT, 'Registration ID associated with state(s)', VALUE_DEFAULT, null),
+                    'registration' => new external_value(PARAM_RAW, 'Registration ID associated with state(s)', VALUE_DEFAULT, null),
                 )
         );
     }
@@ -250,21 +321,23 @@ class lrsproxy_external extends external_api {
         global $USER;
 		
         // Parameter validation
-        $params = self::validate_parameters(self::delete_activity_state_parameters(),
-                array('activityId' => $activityid));
+        $params = self::validate_parameters(self::delete_activity_state_parameters(), array(
+					'activityId' => $activityId, 
+					'agent' => $agent, 
+					'registration' => $registration));
 
 		// Context validation
         $context = get_context_instance(CONTEXT_USER, $USER->id);
         self::validate_context($context);
 
 		// TODO
-		// $response = tincan_fetch_activity_state();
+		// $response = tincan_delete_activity_state($activityid, $agent, $registration);
 
 		return $activityId;
     }
 
     public static function delete_activity_state_returns() {
-        return new external_value(PARAM_TEXT, 'Empty string');
+        return new external_value(PARAM_RAW, 'Empty string');
     }
 
 }

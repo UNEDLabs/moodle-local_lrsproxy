@@ -1,0 +1,135 @@
+<html>
+<head>
+
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.6.4.js"></script>
+
+<script type="text/javascript">
+var domainname = 'http://yourmoodle';
+var token = 'yourtoken';
+	
+function store_statement() {
+    var functionname = 'lrsproxy_store_statement';
+    var serverurl = domainname + '/webservice/rest/server.php' ;
+
+	var statement = {
+			actor: { mbox: 'fgarcia@um.es' },
+			verb: { id: 'http://unilabs.dia.uned.es/xapi/verbs/action' },
+			target: { id: 'http://unilabs.dia.uned.es/xapi/example/CPULoad' },
+			context: { registration: '0840dc28-0b76-46ba-9fae-174a514d4e00' }
+	};
+    var data = {
+                wstoken: token,
+                wsfunction: functionname,
+                moodlewsrestformat: 'json',
+				statement: JSON.stringify(statement)
+                }
+    var response = $.ajax(
+                            {   type: 'POST',
+                                data: data,
+                                url: serverurl,
+								success : function(response) {
+									$('#stmId').html(response);
+								}
+                            }
+                         );
+    console.info(response);
+}
+
+function retrieve_statement() {
+    var functionname = 'lrsproxy_retrieve_statement';
+    var serverurl = domainname + '/webservice/rest/server.php' ;
+
+    var data = {
+                wstoken: token,
+                wsfunction: functionname,
+                moodlewsrestformat: 'json',
+				statementId: $('#stmId').html()
+                }
+    var response = $.ajax(
+                            {   type: 'POST',
+                                data: data,
+                                url: serverurl,
+								success : function(response) {
+									$('#stm').html(JSON.stringify(JSON.parse(response),null,2));
+								}
+                            }
+                         );
+}
+	
+function store_statements() {
+    var functionname = 'lrsproxy_store_statements';
+    var serverurl = domainname + '/webservice/rest/server.php' ;
+
+	var statements = [
+		{statement: JSON.stringify({
+				actor: { mbox: 'fgarcia@um.es' },
+				verb: { id: 'http://unilabs.dia.uned.es/xapi/verbs/action1' },
+				target: { id: 'http://unilabs.dia.uned.es/xapi/example/CPULoad' },
+				context: { registration: 'ec531277-b57b-4c15-8d91-d292c5b2b8f7' }
+		})}, 
+		{statement: JSON.stringify({
+				actor: { mbox: 'fgarcia@um.es' },
+				verb: { id: 'http://unilabs.dia.uned.es/xapi/verbs/action2' },
+				target: { id: 'http://unilabs.dia.uned.es/xapi/example/CPULoad' },
+				context: { registration: 'ec531277-b57b-4c15-8d91-d292c5b2b8f7' }
+		})}];
+    var data = {
+                wstoken: token,
+                wsfunction: functionname,
+                moodlewsrestformat: 'json',
+				statements: statements
+                }
+    var response = $.ajax(
+                            {   type: 'POST',
+                                data: data,
+                                url: serverurl,
+								success : function(response) {
+									$('#stmIds').html(JSON.stringify(response,null,2));
+								}
+                            }
+                         );
+}
+
+function fetch_statements() {
+    var functionname = 'lrsproxy_fetch_statements';
+    var serverurl = domainname + '/webservice/rest/server.php' ;
+
+    var data = {
+                wstoken: token,
+                wsfunction: functionname,
+                moodlewsrestformat: 'json'
+                }
+	data['registration'] = 'ec531277-b57b-4c15-8d91-d292c5b2b8f7';
+	//data['agent'] = JSON.stringify({ mbox: 'fgarcia@um.es' });
+	//data['verb'] = JSON.stringify({ id: 'http://unilabs.dia.uned.es/xapi/verbs/action1' });
+	//data['activity'] = JSON.stringify({ id: 'http://unilabs.dia.uned.es/xapi/example/CPULoad' });
+	//data['since'] = '2015-09-30T13:15:00.000Z';
+	//data['until'] = '2016-09-30T13:15:00.000Z';
+
+    var response = $.ajax(
+                            {   type: 'POST',
+                                data: data,
+                                url: serverurl,
+								success : function(response) {
+									$('#stms').html(JSON.stringify(JSON.parse(response),null,2));
+								}
+                            }
+                         );
+    console.info(response);
+}
+</script>
+</head>
+<body>
+	<h3>Store/Retrieve Statement</h3>
+	<button onclick="store_statement()">Store Statement</button>
+	<button onclick="retrieve_statement()">Retrieve Statement</button>
+	<pre><code id='stmId'>...</code></pre>
+	<pre><code id='stm'>...</code></pre>
+	
+	<h3>Store/Fetch Statements</h3>
+	<button onclick="store_statements()">Store Statements</button>
+	<button onclick="fetch_statements()">Fetch Statements using Registration</button>
+	<pre><code id='stmIds'>...</code></pre>
+	<pre><code id='stms'>...</code></pre>
+</body>
+</html>

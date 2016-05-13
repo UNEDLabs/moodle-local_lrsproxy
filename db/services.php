@@ -44,22 +44,34 @@ $functions = array(
                 'description' => 'Return list of statementIds after storing state statements.',
                 'type'        => 'write'
         ),
-        'lrsproxy_fetch_statement' => array(
+        'lrsproxy_retrieve_statement' => array(
                 'classname'   => 'lrsproxy_external',
-                'methodname'  => 'fetch_statement',
+                'methodname'  => 'retrieve_statement',
                 'description' => 'Return statement associated with specified statementId.',
+                'type'        => 'read'
+        ),
+        'lrsproxy_fetch_statements' => array(
+                'classname'   => 'lrsproxy_external',
+                'methodname'  => 'fetch_statements',
+                'description' => 'Return statements associated with specified query.',
                 'type'        => 'read'
         ),
         'lrsproxy_store_activity_state' => array(
                 'classname'   => 'lrsproxy_external',
                 'methodname'  => 'store_activity_state',
-                'description' => 'Return success after storing state data.',
+                'description' => 'Return stateId after storing state data.',
                 'type'        => 'write'
         ),
-        'lrsproxy_fetch_activity_state' => array(
+        'lrsproxy_retrieve_activity_state' => array(
                 'classname'   => 'lrsproxy_external',
-                'methodname'  => 'fetch_activity_state',
-                'description' => 'Return stored state data.',
+                'methodname'  => 'retrieve_activity_state',
+                'description' => 'Return stored state data with specified stateId.',
+                'type'        => 'read'
+        ),
+        'lrsproxy_fetch_activity_states' => array(
+                'classname'   => 'lrsproxy_external',
+                'methodname'  => 'fetch_activity_states',
+                'description' => 'Return stored state datas with specified query.',
                 'type'        => 'read'
         ),
         'lrsproxy_delete_activity_state' => array(
@@ -74,8 +86,8 @@ $functions = array(
 $services = array(
         'LRS Proxy' => array(
                 'functions' => array ('lrsproxy_echo_text', 'lrsproxy_store_statement', 'lrsproxy_store_statements', 
-					'lrsproxy_fetch_statement',	'lrsproxy_store_activity_state', 'lrsproxy_fetch_activity_state', 
-					'lrsproxy_delete_activity_state'),
+					'lrsproxy_retrieve_statement', 'lrsproxy_fetch_statements', 'lrsproxy_store_activity_state', 
+					'lrsproxy_retrieve_activity_state', 'lrsproxy_fetch_activity_states', 'lrsproxy_delete_activity_state'),
                 'restrictedusers' => 1, // if 1, the administrator must manually select which user can use this service. 
                                         // (Administration > Plugins > Web services > Manage services > Authorised users)
                 'enabled' => 0	// if 0, then token linked to this service won't work
