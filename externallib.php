@@ -45,7 +45,7 @@ class lrsproxy_external extends external_api {
                 array('text' => $text));
 
 		// Context validation
-        $context = get_context_instance(CONTEXT_USER, $USER->id);
+        $context = context_user::instance($USER->id);
         self::validate_context($context);
 
         // Capability checking (OPTIONAL but in most web service it should present)
@@ -77,7 +77,7 @@ class lrsproxy_external extends external_api {
 					array('statement' => $statement));
 
 		// Context validation
-        $context = get_context_instance(CONTEXT_USER, $USER->id);
+        $context = context_user::instance($USER->id);
         self::validate_context($context);
 
 		// Store statement
@@ -113,7 +113,7 @@ class lrsproxy_external extends external_api {
 					array('statements' => $statements));
 
 		// Context validation
-        $context = get_context_instance(CONTEXT_USER, $USER->id);
+        $context = context_user::instance($USER->id);
         self::validate_context($context);
 
 		// Store statements
@@ -148,7 +148,7 @@ class lrsproxy_external extends external_api {
                 array('statementId' => $statementid));
 
 		// Context validation
-        $context = get_context_instance(CONTEXT_USER, $USER->id);
+        $context = context_user::instance($USER->id);
         self::validate_context($context);
 
 		// Query statements
@@ -188,7 +188,7 @@ class lrsproxy_external extends external_api {
 					'until' => $until));
 
 		// Context validation
-        $context = get_context_instance(CONTEXT_USER, $USER->id);
+        $context = context_user::instance($USER->id);
         self::validate_context($context);
 
 		// Query statements
@@ -226,7 +226,7 @@ class lrsproxy_external extends external_api {
 					'stateId' => $stateId));
 
 		// Context validation
-        $context = get_context_instance(CONTEXT_USER, $USER->id);
+        $context = context_user::instance($USER->id);
         self::validate_context($context);
 
 		// Store activity state
@@ -260,7 +260,7 @@ class lrsproxy_external extends external_api {
 					'stateId' => $stateId));
 
 		// Context validation
-        $context = get_context_instance(CONTEXT_USER, $USER->id);
+        $context = context_user::instance($USER->id);
         self::validate_context($context);
 
 		// Retrieve activity state
@@ -292,7 +292,7 @@ class lrsproxy_external extends external_api {
 					'agent' => $agent));
 
 		// Context validation
-        $context = get_context_instance(CONTEXT_USER, $USER->id);
+        $context = context_user::instance($USER->id);
         self::validate_context($context);
 
 		// Fetch states
@@ -327,7 +327,7 @@ class lrsproxy_external extends external_api {
 					'stateId' => $stateId));
 
 		// Context validation
-        $context = get_context_instance(CONTEXT_USER, $USER->id);
+        $context = context_user::instance($USER->id);
         self::validate_context($context);
 
 		// Delete state
@@ -358,7 +358,7 @@ class lrsproxy_external extends external_api {
 					'agent' => $agent));
 
 		// Context validation
-        $context = get_context_instance(CONTEXT_USER, $USER->id);
+        $context = context_user::instance($USER->id);
         self::validate_context($context);
 
 		// Clear states

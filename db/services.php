@@ -29,61 +29,61 @@ $functions = array(
         'lrsproxy_echo_text' => array(
                 'classname'   => 'lrsproxy_external',
                 'methodname'  => 'echo_text',
-                'description' => 'Return the same text that was set as parameter.',
+                'description' => get_string('echo_text','local_lrsproxy'),
                 'type'        => 'read'
         ),
         'lrsproxy_store_statement' => array(
                 'classname'   => 'lrsproxy_external',
                 'methodname'  => 'store_statement',
-                'description' => 'Return statementId after storing state statement.',
+                'description' => get_string('store_statement','local_lrsproxy'),
                 'type'        => 'write'
         ),
         'lrsproxy_store_statements' => array(
                 'classname'   => 'lrsproxy_external',
                 'methodname'  => 'store_statements',
-                'description' => 'Return list of statementIds after storing state statements.',
+                'description' => get_string('store_statements','local_lrsproxy'),
                 'type'        => 'write'
         ),
         'lrsproxy_retrieve_statement' => array(
                 'classname'   => 'lrsproxy_external',
                 'methodname'  => 'retrieve_statement',
-                'description' => 'Return statement associated with specified statementId.',
+                'description' => get_string('retrieve_statement','local_lrsproxy'),
                 'type'        => 'read'
         ),
         'lrsproxy_fetch_statements' => array(
                 'classname'   => 'lrsproxy_external',
                 'methodname'  => 'fetch_statements',
-                'description' => 'Return statements associated with specified query.',
+                'description' => get_string('fetch_statements','local_lrsproxy'),
                 'type'        => 'read'
         ),
         'lrsproxy_store_activity_state' => array(
                 'classname'   => 'lrsproxy_external',
                 'methodname'  => 'store_activity_state',
-                'description' => 'Return stateId after storing state data.',
+                'description' => get_string('store_activity_state','local_lrsproxy'),
                 'type'        => 'write'
         ),
         'lrsproxy_retrieve_activity_state' => array(
                 'classname'   => 'lrsproxy_external',
                 'methodname'  => 'retrieve_activity_state',
-                'description' => 'Return stored state data with specified stateId.',
+                'description' => get_string('retrieve_activity_state','local_lrsproxy'),
                 'type'        => 'read'
         ),
         'lrsproxy_fetch_activity_states' => array(
                 'classname'   => 'lrsproxy_external',
                 'methodname'  => 'fetch_activity_states',
-                'description' => 'Return list of stateIds with specified query.',
+                'description' => get_string('fetch_activity_states','local_lrsproxy'),
                 'type'        => 'read'
         ),
         'lrsproxy_delete_activity_state' => array(
                 'classname'   => 'lrsproxy_external',
                 'methodname'  => 'delete_activity_state',
-                'description' => 'Delete state data associated with specified actor and activity.',
+                'description' => get_string('delete_activity_state','local_lrsproxy'),
                 'type'        => 'write'
         ),
         'lrsproxy_clear_activity_states' => array(
                 'classname'   => 'lrsproxy_external',
                 'methodname'  => 'clear_activity_states',
-                'description' => 'Delete state data associated with specified actor and activity.',
+                'description' => get_string('clear_activity_states','local_lrsproxy'),
                 'type'        => 'write'
         )
 );
