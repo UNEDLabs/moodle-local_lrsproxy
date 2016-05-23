@@ -6,7 +6,7 @@
 //
 
 /**
- * XMLRPC client for Moodle 2
+ * XMLRPC client for Moodle
  *
  * This script does not depend of any Moodle code,
  * and it can be called from a browser.
@@ -17,12 +17,12 @@
 // 1- Install the plugin
 // 2- Enable web service advance feature (Admin > Advanced features)
 // 3- Enable XMLRPC protocol (Admin > Plugins > Web services > Manage protocols)
-// 4- Create a token for a specific user and for the service 'My service' (Admin > Plugins > Web services > Manage tokens)
+// 4- Create a token for a specific user and for the service 'LRS Proxy' (Admin > Plugins > Web services > Manage tokens)
 // 5- Run this script directly from your browser: you should see 'Hello, FIRSTNAME'
 
 /// SETUP - NEED TO BE CHANGED
-$token = 'dff3bc6a9368d3b0db1ef59f6760ef7c';
-$domainname = 'http://YOURMOODLE';
+$token = '8e1b12fedfd98796c04e199407acfd62';
+$domainname = 'http://localhost/moodle';
 
 /// FUNCTION NAME
 $functionname = 'lrsproxy_echo_text';

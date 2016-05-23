@@ -32,3 +32,15 @@ $string['pluginname'] = 'LRS Proxy';
 $string['settings'] = 'General Settings';
 $string['pluginadministration'] = 'LRS Proxy administration';
 $string['lrsproxy'] = 'LRS Proxy';
+
+// services.php
+$string['echo_text'] = 'Return the same text that was set as parameter.';
+$string['store_statement'] = 'Return statementId after storing state statement.';
+$string['store_statements'] = 'Return list of statementIds after storing state statements.';
+$string['retrieve_statement'] = 'Return statement associated with specified statementId.';
+$string['fetch_statements'] = 'Return statements associated with specified query.';
+$string['store_activity_state'] = 'Return stateId after storing state data.';
+$string['retrieve_activity_state'] = 'Return stored state data with specified stateId.';
+$string['fetch_activity_states'] = 'Return list of stateIds with specified query.';
+$string['delete_activity_state'] = 'Delete state data associated with specified actor and activity.';
+$string['clear_activity_states'] = 'Delete state data associated with specified actor and activity.';

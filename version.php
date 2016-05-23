@@ -25,7 +25,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'local_lrsproxy';
-$plugin->version  = 2016050901;
-$plugin->release = '1.0 (Build 2016050901)';
+$plugin->version  = 2016051900;
+$plugin->release = '1.0 (Build 2016051900)';
 $plugin->requires = 2014111000;
 $plugin->maturity = MATURITY_STABLE;

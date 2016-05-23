@@ -44,6 +44,8 @@ class curl {
     /** @var bool */
     private $debug    = false;
     private $cookie   = false;
+    /** @var int */
+    private $count    = 0;
 
     /**
      * @param array $options
