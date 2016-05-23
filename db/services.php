@@ -91,6 +91,7 @@ $functions = array(
 // We define the services to install as pre-built services. A pre-built service is not editable by administrator
 $services = array(
         'LRS Proxy' => array(
+		'shortname' => 'lrsproxy',
                 'functions' => array ('lrsproxy_echo_text', 'lrsproxy_store_statement', 'lrsproxy_store_statements', 
 					'lrsproxy_retrieve_statement', 'lrsproxy_fetch_statements', 'lrsproxy_store_activity_state', 
 					'lrsproxy_retrieve_activity_state', 'lrsproxy_fetch_activity_states', 'lrsproxy_delete_activity_state',
