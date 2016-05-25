@@ -1,0 +1,17 @@
+Extra functionality to get (or create) a user token when you use LTI.
+
+Your client can call the script located in /local/lrsproxy/token/token.php with a simple HTTP request. The required parameters are:
+
+instanceid - LTI module instance
+courseid - course in LTI module instance 
+userid - user enrolled in course
+sesskey - current session key 
+service shortname - service shortname (lrsproxy for us)
+
+Note your client can obtain all these parameters using LTI in Moodle.
+
+Call: https://www.yourmoodle.com/login/token.php?instanceid=INSTANCEID&userid=USERID&courseid=COURSEID&sesskey=SESSKEY&service=SERVICESHORTNAME
+Get in return: {token:4ed876sd87g6d8f7g89fsg6987dfh78d}
+
+This functionality is similar to: https://docs.moodle.org/dev/Creating_a_web_service_client#How_to_get_a_user_token
+But we do not use the parameters username and password.
